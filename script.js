@@ -60,21 +60,21 @@ $(document).ready(async () => {
     };
 
     const showSelectedCoinsInModal = () => {
-        updateModal();
-        let myModal = new bootstrap.Modal(document.getElementById('myModal'));
-        myModal.show();
-    };
+        updateModal()
+        let myModal = new bootstrap.Modal(document.getElementById('myModal'))
+        myModal.show()
+    }
 
     $('.link').on('click', (event) => {
-        const page = $(event.target).attr('pageTitle');
-        $('.page').hide();
-        $('.' + page).show('slow');
+        const page = $(event.target).attr('pageTitle')
+        $('.page').hide()
+        $('.' + page).show('slow')
         if (page === 'reports') {
-            showRealTimeReport();
+            showRealTimeReport()
         }
     });
 
-    let html = '';
+    let html = ''
     coins.map((coin) => {
         html += `
         <div class="coin">
@@ -85,72 +85,72 @@ $(document).ready(async () => {
             </div>
             </div>
             <button id=${coin.id}>More info</button>
-        </div>`;
-    });
-    $('.currencies').html(html);
+        </div>`
+    })
+    $('.currencies').html(html)
 
     $('.coin button').on('click', async (event) => {
-        const id = event.target.id;
+        const id = event.target.id
         if ($(event.target).text() === 'Hide') {
-            $(event.target).parent().find('.moreInfo, img').hide('slow');
-            $(event.target).text('More Info');
+            $(event.target).parent().find('.moreInfo, img').hide('slow')
+            $(event.target).text('More Info')
         } else {
-            $(event.target).text('Loading...');
-            const coinData = await getSpecificCoinData(id);
-            $(event.target).text('Hide');
-            const { ils, eur, usd } = coinData.market_data.current_price;
+            $(event.target).text('Loading...')
+            const coinData = await getSpecificCoinData(id)
+            $(event.target).text('Hide')
+            const { ils, eur, usd } = coinData.market_data.current_price
             let moreHtml = `<div class="moreInfo">
                 <p>ILS: ₪${ils}</p>
                 <p>EUR: €${eur}</p>
-                <p>USD: $${usd}</p></div>`;
-            $(event.target).parent().append(moreHtml);
-            $(event.target).parent().prepend(`<img src=${coinData.image.thumb} alt="${coinData.name}"/>`);
+                <p>USD: $${usd}</p></div>`
+            $(event.target).parent().append(moreHtml)
+            $(event.target).parent().prepend(`<img src=${coinData.image.thumb} alt="${coinData.name}"/>`)
         }
-    });
+    })
 
     $('.checkbox').on('click', (event) => {
-        const coinId = $(event.target).attr('coinid');
+        const coinId = $(event.target).attr('coinid')
         if ($(event.target).is(':checked')) {
-            selectedCoins.push(coinId);
+            selectedCoins.push(coinId)
         } else {
-            selectedCoins = selectedCoins.filter(item => item !== coinId);
+            selectedCoins = selectedCoins.filter(item => item !== coinId)
         }
         if (selectedCoins.length > 5) {
-            $(event.target).prop('checked', false);
-            selectedCoins = selectedCoins.filter(item => item !== coinId);
-            showSelectedCoinsInModal();
+            $(event.target).prop('checked', false)
+            selectedCoins = selectedCoins.filter(item => item !== coinId)
+            showSelectedCoinsInModal()
         }
     });
 
     $('#searchCoin').on('input', function() {
-        let searchText = $(this).val().toLowerCase();
-        let filteredCoins = coins.filter(coin => coin.name.toLowerCase().startsWith(searchText));
+        let searchText = $(this).val().toLowerCase()
+        let filteredCoins = coins.filter(coin => coin.name.toLowerCase().startsWith(searchText))
         
-        let suggestionsHtml = '';
+        let suggestionsHtml = ''
         filteredCoins.forEach(coin => {
-            suggestionsHtml += `<div class="autocomplete-suggestion" data-coinid="${coin.id}">${coin.name}</div>`;
-        });
-        $('#searchResults').html(suggestionsHtml);
+            suggestionsHtml += `<div class="autocomplete-suggestion" data-coinid="${coin.id}">${coin.name}</div>`
+        })
+        $('#searchResults').html(suggestionsHtml)
 
         $('.autocomplete-suggestion').on('click', function() {
-            const coinId = $(this).attr('data-coinid');
-            $('#searchCoin').val($(this).text());
-            $('#searchResults').hide();
-            const specificCoin = coins.find(coin => coin.id === coinId);
+            const coinId = $(this).attr('data-coinid')
+            $('#searchCoin').val($(this).text())
+            $('#searchResults').hide()
+            const specificCoin = coins.find(coin => coin.id === coinId)
             if (specificCoin) {
-                displaySearchedCoin(specificCoin);
+                displaySearchedCoin(specificCoin)
             }
-        });
-        $('#searchResults').show();
-    });
+        })
+        $('#searchResults').show()
+    })
 
     const displaySearchedCoin = (coin) => {
-        $('.coin').hide();
-        $(`.coin:has(h3:contains(${coin.name}))`).show();
-    };
+        $('.coin').hide()
+        $(`.coin:has(h3:contains(${coin.name}))`).show()
+    }
 
     const showRealTimeReport = () => {
-        const ctx = document.getElementById('coinChart').getContext('2d');
+        const ctx = document.getElementById('coinChart').getContext('2d')
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -161,14 +161,14 @@ $(document).ready(async () => {
                     data: [...Array(6).keys()].map(() => Math.random() * 100)
                 }))
             }
-        });
+        })
 
         setInterval(() => {
             chart.data.datasets.forEach(dataset => {
-                dataset.data.shift();
-                dataset.data.push(Math.random() * 100);
-            });
-            chart.update();
-        }, 2000);
-    };
-});
+                dataset.data.shift()
+                dataset.data.push(Math.random() * 100)
+            })
+            chart.update()
+        }, 2000)
+    }
+})

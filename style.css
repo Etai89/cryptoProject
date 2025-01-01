@@ -1,85 +1,105 @@
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-option,
-select,
-input,
-body,
-p,
-span,
-div {
+body {
     font-family: "Ubuntu", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
 }
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .bg {
     background-image: url('https://img.freepik.com/premium-photo/libra-facebook-3d-rendering-cryptocurrency-content_35719-1115.jpg?w=740');
     background-attachment: fixed;
-    background-size: contain;
+    background-size: cover;
     width: 100%;
-    height: 100px;
+    height: 200px;
+    position: relative;
+    z-index: -1;
 }
 
 #menu {
     display: flex;
-    gap: 10px;
-    padding: 10px;
+    gap: 20px;
 }
 
 a.link {
     text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
 }
 
-.coin {
-    border: 1px solid #aaa;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
-    padding-top: 0;
+a.link:hover {
+    color: #0056b3;
 }
 
-.coin div {
-    display: flex;
-    justify-content: space-between;
+#searchbox {
+    position: relative;
 }
 
-.coin img {
-    margin-left: 150px;
-    position: absolute;
-    margin-top: 18px;
+#searchbox input[type="text"] {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#searchbox button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#searchbox button:hover {
+    background-color: #0056b3;
 }
 
 .currencies {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-#searchbox {
-    padding: 10px;
+.coin {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    transition: box-shadow 0.3s ease;
 }
 
-.selectedCoins {
-    display: flex;
-    align-items: center;
-    padding: 5px;
+.coin button{
+    border: 0px;
+    background-color: #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.testModal {
-    position: fixed;
+.coin:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#coinChart {
-    width: 80% !important;
-    margin: 0 auto;
+.coin img {
+    margin-top: 10px;
+    display: block;
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .autocomplete-suggestions {
@@ -88,6 +108,8 @@ a.link {
     background-color: #fff;
     max-height: 150px;
     overflow-y: auto;
+    width: calc(100% - 22px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
@@ -100,14 +122,37 @@ a.link {
     background-color: #f0f0f0;
 }
 
-@media (max-width: 768px) {
-    .currencies {
-        grid-template-columns: 1fr 1fr;
-    }
+.about-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
 }
 
-@media (max-width: 576px) {
+.personal-details {
+    text-align: center;
+    max-width: 300px;
+}
+
+.about-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.project-description {
+    max-width: 600px;
+}
+
+@media (max-width: 768px) {
     .currencies {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .about-container {
+        flex-direction: column;
+        align-items: center;
     }
 }
